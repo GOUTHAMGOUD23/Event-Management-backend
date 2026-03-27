@@ -1,8 +1,9 @@
-# Use Java 17 base image
 FROM openjdk:17-jdk-slim
 
-# Copy jar file
+WORKDIR /app
+
 COPY target/*.jar app.jar
 
-# Run application
-ENTRYPOINT ["java","-jar","/app.jar"]S
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","app.jar"]
