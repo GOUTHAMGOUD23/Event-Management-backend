@@ -49,10 +49,11 @@ public class SecurityConfig {
             // Permit all requests — no JWT filter is installed.
             // Secure per-role once JWT is added.
             .authorizeHttpRequests(auth -> auth
-            	    .requestMatchers("/api/auth/**").permitAll()
-            	    .requestMatchers("/api/events/**").permitAll() // add this
-            	    .anyRequest().authenticated()
-            	)
+                .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
+                .anyRequest().authenticated()
+            )
+
             // Allow H2 console to render inside <iframe>
             .headers(headers -> headers
                 .frameOptions(frameOptions -> frameOptions.sameOrigin())
@@ -68,7 +69,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("https://event-management-frontend-ht66.onrender.com"));          // allow all origins
+        config.setAllowedOriginPatterns(List.of("*"));          // allow all origins
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(false);
